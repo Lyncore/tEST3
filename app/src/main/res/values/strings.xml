@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Напоминалка</string>
+    <string name="Formname">Напоминалка</string>
+    <string name="Buttonename">Вход</string>
+    <string name="datasob">"Дата "</string>
+    <string name="sob">Событие</string>
+    <string name="com">Комментарий</string>
+</resources>
