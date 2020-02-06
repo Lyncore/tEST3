@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -24,6 +27,7 @@ public class Tests extends  AppCompatActivity{
         ListView LV;
     TextView txt;
         Connection con;
+        LinearLayout ll;
         @Override
         protected void  onCreate(Bundle saveInstanceState){
             super.onCreate(saveInstanceState);
@@ -33,6 +37,7 @@ public class Tests extends  AppCompatActivity{
             txt = (TextView) findViewById(R.id.textView1);
             //txt.setText(intent.getStringExtra("text"));
             LV = findViewById(R.id.List);
+            ll = findViewById(R.id.llNotify);
             new GetList().execute();
 
 
@@ -82,17 +87,32 @@ public class Tests extends  AppCompatActivity{
 
 
                     while (res.next()) {
-                        hashMap = new HashMap<>();
+                        View notifyItem = LayoutInflater.from(getApplicationContext()).inflate(R.layout.notify_item, null, false);
+                        TextView twType = (TextView)findViewById(R.id.twType);
+                        TextView twDate = (TextView)findViewById(R.id.twDate);
+                        TextView twCom = (TextView)findViewById(R.id.twCom);
+
+                        twType.setText(res.getString("Событие"));
+                        twDate.setText(res.getString("Дата"));
+                        twCom.setText(res.getString("Комментарий"));
+
+                        notifyItem.setOnClickListener(new View.OnClickListener() {
+                            final int notifyid = res.getInt("id");
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+                        /*hashMap = new HashMap<>();
                         hashMap.put("Дата", res.getString("Дата"));
                         hashMap.put("Событие",res.getString("Событие"));
                         hashMap.put("Комментарий",res.getString("Комментарий"));
                         table.add(hashMap);
-                        /*alst.add(0, res.getString("Дата"));
-                        alst.add(1,res.getString("Событие"));*/
-                        //adapter.notifyDataSetChanged();
+                        */
+                        ll.addView(notifyItem);
 
                     }
-                    LV.setAdapter(adapter);
+                    //LV.setAdapter(adapter);
                 }catch (Exception e){
                     Log.d("SQLEX", e.toString());
                 }
